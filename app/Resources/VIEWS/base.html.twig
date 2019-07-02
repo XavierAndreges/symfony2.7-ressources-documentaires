@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css" />
+    </head>
+    <body class="container">
+
+        <div id="menu">
+
+            <a href="{{ path('home') }}">Home</a>
+
+            ---
+
+            <a href="{{ path('structure') }}">Structures</a>
+              |
+            <a href="{{ path('job') }}">Jobs</a>
+              |
+            <a href="{{ path('work') }}">Works</a>
+              |
+            <a href="{{ path('techno') }}">Technos</a>
+
+            ---
+
+            <a href="{{ path('file') }}">Files</a>
+              |
+            <a href="{{ path('technocategory') }}">Categories</a>
+              |
+            <a href="{{ path('worktype') }}">Worktype</a>
+
+            --- 
+
+            <a href="/virement/web/app_dev.php/logout">Deconnexion</a>
+
+        </div>
+
+        <div id="navigation">
+
+            {% if NavigationService.showDetailItemNavigation() %}
+
+                {% set idPrev = NavigationService.getPreviousId(entity, ids) %}
+                {% if  idPrev != null %}
+                    << <a href="{{ path(app.request.attributes.get('_route'), { 'id': idPrev }) }}">Précédant</a> <<
+                {% endif %}
+
+                 {{ app.request.attributes.get('_route') }}
+
+                {% set idNext = NavigationService.getNextId(entity, ids) %}
+                {% if  idNext != null %}
+                     >> <a href="{{ path(app.request.attributes.get('_route'), { 'id': idNext }) }}">Suivant</a> >> 
+                {% endif %}
+
+            {% endif %}
+
+        </div>
+
+
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+
+    </body>
+
+        <script type="text/javascript" src="{{ asset('js/spinner.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery-ui.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/datePikcker-lang.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/form.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+</html>
