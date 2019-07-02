@@ -1,0 +1,68 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>File list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Filename</th>
+                <th>Namefr</th>
+                <th>Nameen</th>
+                <th>Size</th>
+                <th>Rubrique</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('file_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>
+                    <span title="{{ entity.fileName }}">{{ entity.fileName|truncate(30) }}</span>
+                </td>
+                <td>
+                    {{ entity.nameFr }}
+                </td>
+                <td>{{ entity.nameEn }}</td>
+                <td>{{ (entity.size/1024)|round }} Ko</td>
+                <td>
+                    {% if entity.structures|length > 0 %}
+                        structure
+                    {% elseif entity.works|length > 0 %}
+                        work
+                    {% elseif entity.jobs|length > 0 %}
+                        job
+                    {% endif %}
+                </td>
+                <td>
+                    <img src=" {{ asset('files/' ~ entity.fileName ) }}" class="image" />
+                </td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('file_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('file_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('file_delete',{'id': entity.id}) }}" onclick="return confirm('are u sure?')"> supprimer</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('file_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

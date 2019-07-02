@@ -1,0 +1,30 @@
+test2:
+    path:     /
+    defaults: { _controller: "DocBundle:Test2:index" }
+
+test2_show:
+    path:     /{id}/show
+    defaults: { _controller: "DocBundle:Test2:show" }
+
+test2_new:
+    path:     /new
+    defaults: { _controller: "DocBundle:Test2:new" }
+
+test2_create:
+    path:     /create
+    defaults: { _controller: "DocBundle:Test2:create" }
+    methods:  POST
+
+test2_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DocBundle:Test2:edit" }
+
+test2_update:
+    path:     /{id}/update
+    defaults: { _controller: "DocBundle:Test2:update" }
+    methods:  [POST, PUT]
+
+test2_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DocBundle:Test2:delete" }
+    methods:  [POST, DELETE]

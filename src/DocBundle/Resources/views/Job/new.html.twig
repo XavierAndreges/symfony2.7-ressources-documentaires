@@ -1,0 +1,216 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}New Job{% endblock %}
+
+{% block stylesheets %}
+
+
+{% endblock %}
+
+
+
+{% block body -%}
+
+    <h3>Création d'un job</h3>
+
+	<div class="well">
+
+	  	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+
+		    {{ form_errors(form) }}
+
+
+		    <div class="form-group">
+
+			      {{ form_label(form.functionFr, "functionFr", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+			      {{ form_errors(form.functionFr) }}
+
+			      <div class="col-sm-4">
+			        {{ form_widget(form.functionFr, {'attr': {'class': 'form-control'}}) }}
+			      </div>
+
+		    </div>
+
+
+			<div class="form-group">
+
+		      {{ form_label(form.functionEn, "functionEn", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.functionEn) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.functionEn, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.textFr, "textFr", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.textFr) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.textFr, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.textEn, "textEn", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.textEn) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.textEn, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.dateStart, "dateStart", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.dateStart) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.dateStart, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.dateEnd, "dateEnd", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.dateEnd) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.dateEnd, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.structure, "structure", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.structure) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.structure, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.technos, "technos", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.technos) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.technos, {'attr': {'class': 'technos'}}) }}
+		      </div>
+
+		    </div>
+
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.tags, "tags", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.tags) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.tags, {'attr': {'class': 'tags'}}) }}
+		      </div>
+
+		    </div>
+
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.uploadedFiles, "uploadedFiles", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.uploadedFiles) }}
+
+		      <div id="block_image" class="col-sm-4">
+
+			      	{% for file in entity.files %}
+	                	<a class="delete_file" id="file_{{ file.id }}" href="javascript: file_delete({{ file.id }})" onclick="return confirm('are u sure?')">
+	                		<img src=" {{ asset('assets/close.png') }}" class="close_cross" />
+	                		<img src=" {{ asset('files/' ~ file.fileName ) }}" class="image absoluteIndex" />
+	                	</a>
+	            	{% endfor %}	
+
+	            	<div class="row">
+	            		<div class="col-sm-12">
+			            	<label class="myLabel">
+		    					<input type="file" id="docbundle_job_uploadedFiles" name="docbundle_job[uploadedFiles][]" multiple="multiple" class="form-control">
+		    					<span>Ajouter des fichiers</span>
+							</label>
+						</div>
+					</div>
+
+            	</div>
+
+		    </div>
+
+
+			<div class="row">
+
+				<div class="col-sm-3">
+					<a href="{{ path('job') }}">
+            			Back to the list
+        			</a>
+		    	</div>
+
+				<div class="col-sm-4">
+		    		{{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+		    	</div>
+
+		    </div>
+
+
+		{{ form_row(form._token) }}
+
+		{{ form_end(form, {'render_rest': false}) }}
+
+
+	</div>
+
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+
+	<script>
+
+	$( function() {
+        $("#docbundle_job_dateStart").datepicker($.datepicker.regional['fr']);
+        $("#docbundle_job_dateEnd").datepicker($.datepicker.regional['fr']);
+        });
+
+        
+
+            //alert("toto");
+        </script>
+	
+{% endblock %}

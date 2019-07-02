@@ -1,0 +1,23 @@
+job:
+    path:     /
+    defaults: { _controller: "DocBundle:Job:index" }
+
+job_show:
+    path:     /{id}/show
+    defaults: { _controller: "DocBundle:Job:show" }
+
+job_new:
+    path:     /new
+    defaults: { _controller: "DocBundle:Job:new" }
+
+job_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DocBundle:Job:edit" }
+
+job_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DocBundle:Job:delete" }
+
+job_admin:
+    path:     /admin
+    defaults: { _controller: "DocBundle:Job:index" }

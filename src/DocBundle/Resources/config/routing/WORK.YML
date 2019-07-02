@@ -1,0 +1,23 @@
+work:
+    path:     /{workType}
+    defaults: { _controller: "DocBundle:Work:index", workType: null }
+
+work_show:
+    path:     /{id}/show
+    defaults: { _controller: "DocBundle:Work:show" }
+
+work_new:
+    path:     /new
+    defaults: { _controller: "DocBundle:Work:new" }
+
+work_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DocBundle:Work:edit" }
+
+work_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DocBundle:Work:delete" }
+
+work_admin:
+    path:     /admin
+    defaults: { _controller: "DocBundle:Work:index" }

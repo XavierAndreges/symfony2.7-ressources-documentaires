@@ -1,0 +1,22 @@
+services:
+
+    doc.file:
+        class:     DocBundle\Service\FileService
+        arguments: [@doctrine.orm.entity_manager, %file_ulpload_dir%]
+
+    doc.utils:
+        class:     DocBundle\Service\UtilsService
+        arguments: [@doctrine.orm.entity_manager]
+
+    doc.navigation:
+        class:     DocBundle\Service\NavigationService
+        arguments: [@doctrine.orm.entity_manager, '@service_container']
+
+    doc.sortByField:
+        class: DocBundle\Twig\SortByField
+        tags:
+            - { name: twig.extension }
+
+    doc.request:
+        class:     DocBundle\Service\RequestService
+        arguments: [@doctrine.orm.entity_manager]

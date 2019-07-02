@@ -1,0 +1,299 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Work{% endblock %}
+
+{% block body -%}
+
+    <h1>Work list</h1>
+
+
+
+
+
+
+
+    <form name="criteria" method="post" class="blockCriteria">
+
+        <select name="workType" id="workTypeSelect">
+
+            <option value="">Tous types de travaux</option>
+
+            {% for workType in workTypesList %}
+                {% if workTypeSelectedIdName and workType.idName == workTypeSelectedIdName %}
+                    <option value="{{ workType.idName }}" selected="selected">{{ workType.nameFr }}</option>
+                {% else %}
+                    <option value="{{ workType.idName }}">{{ workType.nameFr }}</option>
+                {% endif %}
+            {% endfor %}
+
+        </select>
+
+        <select name="techno" id="techoSelect">
+
+            <option value="">Toutes les technologies</option>
+
+            {% for techno in technosList %}
+                {% if technoSelectedName and techno.name == technoSelectedName %}
+                    <option value="{{ techno.name }}" selected="selected">{{ techno.name }}</option>
+                {% else %}
+                    <option value="{{ techno.name }}">{{ techno.name }}</option>
+                {% endif %}
+            {% endfor %}
+
+        </select>
+
+        <select name="classement" id="dateSelect">
+
+            <option value="id">classement par id</option>
+
+            {% if dateOrder == "ASC" %}
+                <option value="ASC" selected="selected">Du plus ancien</option>
+            {% else %}
+                <option value="ASC">Du plus ancien</option>
+            {% endif %}
+
+            {% if dateOrder == "DESC" %}
+                <option value="DESC" selected="selected">Du plus récent</option>
+            {% else %}
+                <option value="DESC">Du plus récent</option>
+            {% endif %}
+
+        </select>
+
+        <input type="submit" name="criteria" value="Valider" />
+
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+    {% if isAdmin %}
+
+        <a href="{{ path('work') }}" class="btn btn-default">Mode public</a>
+
+        <a href="{{ path('work_new') }}" class="btn btn-default">Créer un nouvel élément</a>
+
+        <br><br>
+
+
+        <div class="row firstLineTable">
+
+            <strong>
+
+                <div class="col-md-2">
+                    <div class="row">
+                        <div class="col-md-2">
+                            id
+                        </div>
+                        <div class="col-md-10">
+                            <strong>nom</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    Date début / fin
+                </div>
+
+                <div class="col-md-1">
+                    City
+                </div>
+
+                <div class="col-md-1">
+                    Geoloc
+                </div>
+
+                <div class="col-md-1">
+                    Structure
+                </div>
+
+                <div class="col-md-1">
+                    Job
+                </div>
+
+                <div class="col-md-1">
+                    Type
+                </div>
+
+                <div class="col-md-1">
+                    Techno
+                </div>
+
+                <div class="col-md-1">
+                    Tags / links
+                </div>
+
+                <div class="col-md-1">
+                    Images
+                </div>
+
+                <div class="col-md-1">
+                    Actions
+                </div>
+
+            </strong>
+
+        </div>
+
+        <br>
+
+        {% for entity in entities %}
+
+        <div class="row {% if loop.index is even %}rowBgEven{% else %}
+        rowBgOdd{% endif %}">
+
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-2">
+                        {{ entity.id }}
+                    </div>
+                    <div class="col-md-10">
+                        <strong>{{ entity.nameFr }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-1">
+              {% if entity.dateStart %}{{ entity.dateStart|date('d/m/Y') }}{% endif %}
+              {% if entity.dateEnd and entity.dateEnd != entity.dateStart %} - {{ entity.dateEnd|date('d/m/Y') }}{% endif %}
+
+            </div>
+
+            <div class="col-md-1">
+                {{ entity.city }}
+            </div>
+
+            <div class="col-md-1">
+                {{ entity.geoloc }}
+            </div>
+
+            <div class="col-md-1">
+                {% if entity.structure %}{{ entity.structure.name }}{% endif %}
+            </div>
+
+            <div class="col-md-1">
+                {% if entity.job %}{{ entity.job.functionFr }}{% endif %}
+            </div>
+
+            <div class="col-md-1">
+                <strong>{% if entity.workType %}{{ entity.workType.nameFr }}{% endif %}</strong>
+            </div>
+
+            <div class="col-md-1">
+                {{ UtilsService.getConcatenateTechnos(entity.technos)|truncate(40) }}
+            </div>
+
+            <div class="col-md-1 linkTagsWebVideo">
+
+                {% if entity.tags|length > 0 %}
+                    <a title="{{ UtilsService.getConcatenateTags(entity.tags) }}">- {{ entity.tags|length }} tags</a>
+                {% endif %}
+
+                {% if entity.website %}
+                    <a href="{{ entity.website }}" target="_blank" title="{{ entity.website }}">- site web</a>
+                {% endif %}
+
+                {% if entity.linkVideo1 %}
+                    <a href="{{ entity.linkVideo1 }}" target="_blank" title="{{ entity.linkVideo1 }}">- video 1</a>
+                {% endif %}
+
+                {% if entity.linkVideo2 %}
+                    <a href="{{ entity.linkVideo2 }}" target="_blank" title="{{ entity.linkVideo2 }}">- video 2</a>
+                {% endif %}
+
+            </div>
+
+            <div class="col-md-1">
+                {% set nbFiles = entity.files|length %}
+                {% if nbFiles > 0 %}
+                    <div class="vignetteListe" style="background-image:url({{ asset('files/' ~ entity.files[0].fileName ) }})">
+                        <div class="pastilleVignette">
+                            {{ nbFiles }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+          <div class="col-md-1">
+            <div class="row">
+                <a class="col-md-12" href="{{ path('work_show', { 'id': entity.id }) }}">Consulter</a>
+                <a class="col-md-12" href="{{ path('work_edit',{'id': entity.id}) }}"> Modifier</a>
+                <a class="col-md-12" href="{{ path('work_delete',{'id': entity.id}) }}" onclick="return confirm('are u sure?')"> Supprimer</a>
+              </div>
+          </div>
+
+        </div>
+
+        {% endfor %}
+
+
+
+
+
+
+
+    {% else %}
+
+
+
+
+
+
+        <a href="{{ path('work_admin') }}" class="btn btn-default">Mode admin</a>
+
+        <br><br>
+
+        <div class="row workRowList">
+
+            {% for entity in entities %}
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 sizeRowList">
+
+                  <div class="">
+
+                        {% if entity.files|length > 0 %}
+                            <a class="mainLinkRowList" href="{{ path('work_show', { 'id': entity.id })}}">
+                                <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="img-responsive center-block vertical-center" />
+                            </a>
+                        {% endif %}
+
+                        <div class="blockInfoList">
+
+                            <div class="listeDate blue">
+
+                                {{ entity.workType.nameFr }}
+
+                                (
+                                {% if entity.dateStart %}
+                                    {{ entity.dateStart|date('F Y') }}
+                                {% endif %}
+                                )
+
+                            </div>
+
+                            <div class="listeTitre">
+
+                                {{ entity.nameFr }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,30 @@
+worktype:
+    path:     /
+    defaults: { _controller: "DocBundle:WorkType:index" }
+
+worktype_show:
+    path:     /{id}/show
+    defaults: { _controller: "DocBundle:WorkType:show" }
+
+worktype_new:
+    path:     /new
+    defaults: { _controller: "DocBundle:WorkType:new" }
+
+worktype_create:
+    path:     /create
+    defaults: { _controller: "DocBundle:WorkType:create" }
+    methods:  POST
+
+worktype_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DocBundle:WorkType:edit" }
+
+worktype_update:
+    path:     /{id}/update
+    defaults: { _controller: "DocBundle:WorkType:update" }
+    methods:  [POST, PUT]
+
+worktype_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DocBundle:WorkType:delete" }
+    methods:  [POST, DELETE]

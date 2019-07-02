@@ -1,0 +1,115 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+
+    <h1>File creation</h1>
+
+	<div class="well">
+
+	  	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+
+		    {{ form_errors(form) }}
+
+
+		    <div class="form-group">
+
+			      {{ form_label(form.fileName, "fileName", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+			      {{ form_errors(form.fileName) }}
+
+			      <div class="col-sm-4">
+			        {{ form_widget(form.fileName, {'attr': {'class': 'form-control'}}) }}
+			      </div>
+
+		    </div>
+
+
+			<div class="form-group">
+
+		      {{ form_label(form.nameFr, "nameFr", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.nameFr) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.nameFr, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.nameEn, "nameEn", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.nameEn) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.nameEn, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.structures, "structures", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.structures) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.structures, {'attr': {'class': 'tags'}}) }}
+		      </div>
+
+		    </div>
+
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.works, "works", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.works) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.works, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+		   	<div class="form-group">
+
+		      {{ form_label(form.jobs, "jobs", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.jobs) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.jobs, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+
+			<div class="row">
+
+				<div class="col-sm-3">
+					<a href="{{ path('file') }}">
+            			Back to the list
+        			</a>
+		    	</div>
+
+				<div class="col-sm-4">
+		    		{{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+		    	</div>
+
+		    </div>
+
+
+		{{ form_end(form, {'render_rest': false}) }}
+
+
+	</div>
+
+
+{% endblock %}

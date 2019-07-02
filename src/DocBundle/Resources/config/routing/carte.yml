@@ -1,0 +1,30 @@
+carte:
+    path:     /
+    defaults: { _controller: "DocBundle:Carte:index" }
+
+carte_show:
+    path:     /{id}/show
+    defaults: { _controller: "DocBundle:Carte:show" }
+
+carte_new:
+    path:     /new
+    defaults: { _controller: "DocBundle:Carte:new" }
+
+carte_create:
+    path:     /create
+    defaults: { _controller: "DocBundle:Carte:create" }
+    methods:  POST
+
+carte_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DocBundle:Carte:edit" }
+
+carte_update:
+    path:     /{id}/update
+    defaults: { _controller: "DocBundle:Carte:update" }
+    methods:  [POST, PUT]
+
+carte_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DocBundle:Carte:delete" }
+    methods:  [POST, DELETE]

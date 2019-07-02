@@ -1,0 +1,122 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Techno{% endblock %}
+
+{% block body -%}
+
+    <h1>{{ entity.name }}</h1>
+
+
+    <div class="row">
+
+        <div class="col-sm-6">
+
+            {{ include("DocBundle:Common:caroussel.html.twig") }}
+
+        </div>
+
+
+        <div class="col-sm-6 blockItemDetail">
+
+            <div>Catégorie : <strong>{{ entity.technoCategory.name }}</strong></div>
+
+            <div>Utilisation : <strong>{{ entity.workType.name }}</strong></div>
+
+            <div>Expérience  : <strong>
+                              {{ entity.experienceTime }} an{% if entity.experienceTime > 1 %}s{% endif %}
+                               (depuis {{ entity.startedYear }})
+                              </strong>
+            </div>
+
+            <div>Description : <strong>{{ entity.textFr|nl2br }}</strong></div>
+
+            <div>Documentation : <strong>{{ entity.website }}</strong></div>
+
+            <div>Jobs :</div>
+
+            <div>
+
+                {% for entity in entity.jobs %}
+                    <a href="{{ path('job_show', { 'id': entity.id }) }}">
+                        <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="miniLogoEnLigne50" title="{{ entity.name }})" />
+                    </a>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="adminDetail">
+      <ul class="record_actions">
+          <li>
+              <a href="{{ path('work') }}">
+                  Back to the list
+              </a>
+          </li>
+          <li>
+              <a href="{{ path('work_edit', { 'id': entity.id }) }}">
+                  Edit
+              </a>
+          </li>
+          <li>
+              <a href="{{ path('work_delete', { 'id': entity.id }) }}" onclick="return confirm('are u sure?')">Supprimer</a>
+          </li>
+      </ul>
+    <div>
+
+
+
+
+
+
+
+    <div class="row workRowList">
+
+        {% if entity.works|length > 0 %}
+            <div class="titleAssociatedWorks">Travaux associés</div>
+        {% endif %}
+
+        {% for entity in entity.works %}
+
+            <div class="col-xs-3 col-sm-3 col-md-3" style="height:300px;">
+
+                {% if entity.files|length > 0 %}
+                    <a class="mainLinkRowList" href="{{ path('work_show', { 'id': entity.id })}}">
+                        <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="img-responsive center-block vertical-center" />
+                    </a>
+                {% endif %}
+
+                <div class="blockInfoList">
+
+                    <div class="listeDate blue">
+
+                        {{ entity.workType.nameFr }}
+
+                        (
+                        {% if entity.dateStart %}
+                            {{ entity.dateStart|date('F Y') }}
+                        {% endif %}
+                        )
+
+                    </div>
+
+                    <div class="listeTitre">
+
+                        {{ entity.nameFr }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,181 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body -%}
+
+
+
+<form name="criteria" method="post" class="blockCriteria">
+
+    {% for tag in tags %}
+
+        <div class="checkboxTags">
+          <input type="checkbox" name="tagSelection[]" value="{{ tag.name }}"
+          {% if tag.name in tagSelection %}checked{% endif %}>
+          <span class="labelCheckBoxTag">{{ tag.name }}</span>
+        </div>
+
+    {% endfor %}
+
+    <input type="submit" name="tagsSelectionForm" value="Valider" class="submitBtn" />
+
+</form>
+
+
+
+
+
+<div class="row firstLineTable">
+
+    <strong>
+
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-2">
+                    id
+                </div>
+                <div class="col-md-10">
+                    <strong>nom</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-1">
+            Date début / fin
+        </div>
+
+        <div class="col-md-1">
+            City
+        </div>
+
+        <div class="col-md-1">
+            Geoloc
+        </div>
+
+        <div class="col-md-1">
+            Structure
+        </div>
+
+        <div class="col-md-1">
+            Job
+        </div>
+
+        <div class="col-md-1">
+            Type
+        </div>
+
+        <div class="col-md-1">
+            Techno
+        </div>
+
+        <div class="col-md-1">
+            Tags / links
+        </div>
+
+        <div class="col-md-1">
+            Images
+        </div>
+
+        <div class="col-md-1">
+            Actions
+        </div>
+
+    </strong>
+
+</div>
+
+<br>
+
+{% for entity in entities %}
+
+<div class="row {% if loop.index is even %}rowBgEven{% else %}
+rowBgOdd{% endif %}">
+
+    <div class="col-md-2">
+        <div class="row">
+            <div class="col-md-2">
+                {{ entity.id }}
+            </div>
+            <div class="col-md-10">
+                <strong>{{ entity.nameFr }}</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-1">
+      {% if entity.dateStart %}{{ entity.dateStart|date('d/m/Y') }}{% endif %}
+      {% if entity.dateEnd and entity.dateEnd != entity.dateStart %} - {{ entity.dateEnd|date('d/m/Y') }}{% endif %}
+
+    </div>
+
+    <div class="col-md-1">
+        {{ entity.city }}
+    </div>
+
+    <div class="col-md-1">
+        {{ entity.geoloc }}
+    </div>
+
+    <div class="col-md-1">
+        {% if entity.structure %}{{ entity.structure.name }}{% endif %}
+    </div>
+
+    <div class="col-md-1">
+        {% if entity.job %}{{ entity.job.functionFr }}{% endif %}
+    </div>
+
+    <div class="col-md-1">
+        <strong>{% if entity.workType %}{{ entity.workType.nameFr }}{% endif %}</strong>
+    </div>
+
+    <div class="col-md-1">
+        {{ UtilsService.getConcatenateTechnos(entity.technos)|truncate(40) }}
+    </div>
+
+    <div class="col-md-1 linkTagsWebVideo">
+
+        {% if entity.tags|length > 0 %}
+            <a title="{{ UtilsService.getConcatenateTags(entity.tags) }}">- {{ entity.tags|length }} tags</a>
+        {% endif %}
+
+        {% if entity.website %}
+            <a href="{{ entity.website }}" target="_blank" title="{{ entity.website }}">- site web</a>
+        {% endif %}
+
+        {% if entity.linkVideo1 %}
+            <a href="{{ entity.linkVideo1 }}" target="_blank" title="{{ entity.linkVideo1 }}">- video 1</a>
+        {% endif %}
+
+        {% if entity.linkVideo2 %}
+            <a href="{{ entity.linkVideo2 }}" target="_blank" title="{{ entity.linkVideo2 }}">- video 2</a>
+        {% endif %}
+
+    </div>
+
+    <div class="col-md-1">
+        {% set nbFiles = entity.files|length %}
+        {% if nbFiles > 0 %}
+            <div class="vignetteListe" style="background-image:url({{ asset('files/' ~ entity.files[0].fileName ) }})">
+                <div class="pastilleVignette">
+                    {{ nbFiles }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+  <div class="col-md-1">
+    <div class="row">
+        <a class="col-md-12" href="{{ path('work_show', { 'id': entity.id }) }}">Consulter</a>
+        <a class="col-md-12" href="{{ path('work_edit',{'id': entity.id}) }}"> Modifier</a>
+        <a class="col-md-12" href="{{ path('work_delete',{'id': entity.id}) }}" onclick="return confirm('are u sure?')"> Supprimer</a>
+      </div>
+  </div>
+
+</div>
+
+{% endfor %}
+
+
+
+{% endblock %}

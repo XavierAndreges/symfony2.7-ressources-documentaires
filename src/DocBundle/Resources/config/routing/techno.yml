@@ -1,0 +1,34 @@
+techno:
+    path:     /
+    defaults: { _controller: "DocBundle:Techno:index" }
+
+techno_show:
+    path:     /{id}/show
+    defaults: { _controller: "DocBundle:Techno:show" }
+
+techno_new:
+    path:     /new
+    defaults: { _controller: "DocBundle:Techno:new" }
+
+techno_create:
+    path:     /create
+    defaults: { _controller: "DocBundle:Techno:create" }
+    methods:  POST
+
+techno_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DocBundle:Techno:edit" }
+
+techno_update:
+    path:     /{id}/update
+    defaults: { _controller: "DocBundle:Techno:update" }
+    methods:  [POST, PUT]
+
+techno_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DocBundle:Techno:delete" }
+    methods:  [POST, DELETE]
+
+techno_admin:
+    path:     /admin
+    defaults: { _controller: "DocBundle:Techno:index" }

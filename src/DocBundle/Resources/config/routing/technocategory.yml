@@ -1,0 +1,30 @@
+technocategory:
+    path:     /
+    defaults: { _controller: "DocBundle:TechnoCategory:index" }
+
+technocategory_show:
+    path:     /{id}/show
+    defaults: { _controller: "DocBundle:TechnoCategory:show" }
+
+technocategory_new:
+    path:     /new
+    defaults: { _controller: "DocBundle:TechnoCategory:new" }
+
+technocategory_create:
+    path:     /create
+    defaults: { _controller: "DocBundle:TechnoCategory:create" }
+    methods:  POST
+
+technocategory_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DocBundle:TechnoCategory:edit" }
+
+technocategory_update:
+    path:     /{id}/update
+    defaults: { _controller: "DocBundle:TechnoCategory:update" }
+    methods:  [POST, PUT]
+
+technocategory_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DocBundle:TechnoCategory:delete" }
+    methods:  [POST, DELETE]

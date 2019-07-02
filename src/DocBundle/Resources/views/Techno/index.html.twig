@@ -1,0 +1,221 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Technos{% endblock %}
+
+{% block body -%}
+
+    <h1>Techno list</h1>
+
+    {% if isAdmin %}
+
+      <a href="{{ path('techno') }}" class="btn btn-default">Mode public</a>
+
+      <a href="{{ path('techno_new') }}" class="btn btn-default">Créer un nouvel élément</a>
+
+      <br><br>
+
+        <div class="row firstLineTable">
+
+            <strong>
+
+                <div class="col-md-2">
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            id
+                        </div>
+                        <div class="col-md-9">
+                                name
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-2">
+                    Textfr
+                </div>
+
+                <div class="col-md-1">
+                    Website
+                </div>
+
+                <div class="col-md-2">
+                    Category
+                </div>
+
+                <div class="col-md-1">
+                    Worktype
+                </div>
+
+                <div class="col-md-1">
+                    experience
+                </div>
+
+                <div class="col-md-1">
+                    Depuis
+                </div>
+
+                <div class="col-md-1">
+                    files
+                </div>
+
+                <div class="col-md-1">
+                    Actions
+                </div>
+
+            </strong>
+
+        </div>
+
+        <br>
+
+        {% for entity in entities %}
+
+            <div class="row {% if loop.index is even %}rowBgEven{% else %}rowBgOdd{% endif %}">
+
+                <div class="col-md-2">
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            {{ entity.id }}
+                        </div>
+                        <div class="col-md-9">
+                            <strong>
+                                {{ entity.name }}
+                            </strong>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-2">
+                    {{ entity.textFr|truncate(100) }}
+                </div>
+
+                <div class="col-md-1">
+                    {% if entity.website %}
+                        <a href="{{ entity.website }}" target="_blank" title="{{ entity.website }}">1 lien</a>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-2">
+                    {% if entity.technoCategory %}{{ entity.technoCategory.Namefr }}{% endif %}
+                </div>
+
+                <div class="col-md-1">
+                    {% if entity.workType %}{{ entity.workType.nameFr }}{% endif %}
+                </div>
+
+                <div class="col-md-1">
+                    {% if entity.experienceTime %}
+                      {{ entity.experienceTime }} an{% if entity.experienceTime > 1 %}s{% endif %}
+                    {% endif %}
+                </div>
+
+                <div class="col-md-1">
+                    {% if entity.startedYear %}{{ entity.startedYear }}{% endif %}
+                </div>
+
+                <div class="col-md-1">
+                        <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="img-responsive" />
+                </div>
+
+                <div class="col-md-1">
+                    <div class="row">
+                        <a class="col-md-12" href="{{ path('techno_show', { 'id': entity.id }) }}">Consulter</a>
+                        <a class="col-md-12" href="{{ path('techno_edit', { 'id': entity.id }) }}">Modifier</a>
+                        <a class="col-md-12" href="{{ path('techno_delete', { 'id': entity.id }) }}" onclick="return confirm('are u sure?')">Supprimer</a>
+                    </div>
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+
+
+
+
+
+    <a href="{{ path('techno_admin') }}" class="btn btn-default">Mode admin</a>
+
+    <br><br>
+
+    <div class="row technoRowList">
+
+        {% for entity in entities %}
+
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 sizeRowList">
+
+              <div class="borderRowList">
+
+                  <a class="mainLinkRowList" href="{{ path('techno_show', { 'id': entity.id })}}">
+                      <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="img-responsive center-block vertical-center" />
+                  </a>
+
+                  <div class="blockList">
+
+                        <div class="blockInfoList">
+
+                            <div class="listeDate">
+
+                                {{ entity.technoCategory.name }}
+
+                            </div>
+
+                            <div class="listeTitre">
+
+                                {{ entity.name }}
+
+                            </div>
+
+                            <div class="listeFunction blue">
+
+                              {% if entity.worktype %}
+                                Mon utilisation : {{ entity.worktype.name|lower }}
+                              {% else %}
+                                Divers
+                              {% endif %}
+
+                            </div>
+
+                            <div class="italic">
+                              {% if entity.experienceTime %}
+                                {{ entity.experienceTime }} an{% if entity.experienceTime > 1 %}s{% endif %}
+                              {% endif %}
+                               d'expérience
+                            </div>
+
+                        </div>
+
+
+                        <div class="encadreJobsMissionProjet">
+
+                          {% set items = UtilsService.getItemsByIdsOrRandom(entity, 'Techno', 'Work') %}
+
+                            {% for entity in items %}
+                                <a href="{{ path('work_show', { 'id': entity.id }) }}" style="text-decoration:none;">
+                                    <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="miniLogoEnLigne50" title="{{ entity.name }}" />
+                                </a>
+                            {% endfor %}
+
+                        </div>
+
+
+                  </div>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+
+
+
+{% endblock %}

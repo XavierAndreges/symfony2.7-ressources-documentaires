@@ -1,0 +1,51 @@
+home:
+    path:     /home
+    defaults: { _controller: DocBundle:Home:index }
+
+doc_file:
+    resource: "@DocBundle/Resources/config/routing/file.yml"
+    prefix:   /file
+
+doc_work:
+    resource: "@DocBundle/Resources/config/routing/work.yml"
+    prefix:   /work
+
+doc_techno:
+    resource: "@DocBundle/Resources/config/routing/techno.yml"
+    prefix:   /techno
+
+doc_worktype:
+    resource: "@DocBundle/Resources/config/routing/worktype.yml"
+    prefix:   /worktype
+
+doc_job:
+    resource: "@DocBundle/Resources/config/routing/job.yml"
+    prefix:   /job
+
+doc_structure:
+    resource: "@DocBundle/Resources/config/routing/structure.yml"
+    prefix:   /api/structure
+
+doc_technocategory:
+    resource: "@DocBundle/Resources/config/routing/technocategory.yml"
+    prefix:   /technocategory
+
+# src/OC/PlatformBundle/Resources/config/routing.yml
+
+hello_the_world:
+    path:     /hello-world/{nom}
+    defaults: { _controller: DocBundle:Advert:index }
+
+view_country:
+    path:     /country/{id}
+    defaults: { _controller: DocBundle:Country:view }
+    requirements:
+        id: \d+
+
+add_country:
+    path:     /country/add
+    defaults: { _controller: DocBundle:Country:add }
+
+get_works:
+    path:     /works/get
+    defaults: { _controller: DocBundle:Work:get }

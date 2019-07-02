@@ -1,0 +1,268 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Structure{% endblock %}
+
+{% block body -%}
+
+    <h1>Structure list</h1>
+
+    {% if isAdmin %}
+
+      <a href="{{ path('structure') }}" class="btn btn-default">Mode public</a>
+
+      <a href="{{ path('structure_new') }}" class="btn btn-default">Créer un nouvel élément</a>
+
+      <br><br>
+
+      <div class="row firstLineTable">
+
+          <strong>
+
+              <div class="col-md-2">
+                  <div class="row">
+                      <div class="col-md-2">
+                          id
+                      </div>
+                      <div class="col-md-10">
+                          <strong>Name</strong>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-md-1">
+                  Fonction
+              </div>
+
+              <div class="col-md-1">
+                  Date début / fin
+              </div>
+
+              <div class="col-md-2">
+                  City
+              </div>
+
+              <div class="col-md-1">
+                  Geoloc
+              </div>
+
+              <div class="col-md-2">
+                  Website
+              </div>
+
+              <div class="col-md-1">
+                  Tags
+              </div>
+
+              <div class="col-md-1">
+                  files
+              </div>
+
+              <div class="col-md-1">
+                  Actions
+              </div>
+
+          </strong>
+
+      </div>
+
+          <br>
+
+      {% for entity in entities %}
+
+          <div class="row {% if loop.index is even %}rowBgEven{% else %}rowBgOdd{% endif %}">
+
+              <div class="col-md-2">
+                  <div class="row">
+                      <div class="col-md-2">
+                          {{ entity.id }}
+                      </div>
+                      <div class="col-md-10">
+                          <strong>{{ entity.name }}</strong>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-md-1">
+                  {{ entity.functionFr }}
+              </div>
+
+              <div class="col-md-1">
+                  {% if entity.dateStart %}
+                      {{ entity.dateStart|date('Y') }}
+                  {% endif %}
+                      à
+                  {% if entity.dateEnd %}
+                      {{ entity.dateEnd|date('Y') }}
+                  {% else %}
+                      aujourd'hui
+                  {% endif %}
+              </div>
+
+              <div class="col-md-2">
+                  {{ entity.city }}
+              </div>
+
+              <div class="col-md-1">
+                  {{ entity.geoloc }}
+              </div>
+
+              <div class="col-md-2">
+                  <a href="{{ entity.website }}" target="_blank">{{ entity.website }}</a>
+              </div>
+
+              <div class="col-md-1">
+                  {% if entity.tags|length > 0 %}
+                      <a title="{{ UtilsService.getConcatenateTags(entity.tags) }}">{{ entity.tags|length }} items</a>
+                  {% endif %}
+              </div>
+
+              <div class="col-md-1">
+                  {% set nbFiles = entity.files|length %}
+                  {% if nbFiles > 0 %}
+                      <div class="vignetteListe" style="background-image:url({{ asset('files/' ~ entity.files[0].fileName ) }})">
+                          <div class="pastilleVignette">
+                              {{ nbFiles }}
+                          </div>
+                      </div>
+                  {% endif %}
+              </div>
+
+              <div class="col-md-1">
+                  <div class="row">
+                      <a class="col-md-12" href="{{ path('structure_show', { 'id': entity.id }) }}">Consulter</a>
+                      <a class="col-md-12" href="{{ path('structure_edit', { 'id': entity.id }) }}">Modifier</a>
+                      <a class="col-md-12" href="{{ path('structure_delete', { 'id': entity.id }) }}" onclick="return confirm('are u sure?')">Supprimer</a>
+                  </div>
+              </div>
+
+          </div>
+
+      {% endfor %}
+
+    {% else %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <a href="{{ path('structure_admin') }}" class="btn btn-default">Mode admin</a>
+
+      <br><br>
+
+      <div class="row structureRowList">
+
+          {% for entity in entities %}
+
+              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 sizeRowList">
+
+                <div class="borderRowList">
+
+                    <a class="mainLinkRowList" href="{{ path('structure_show', { 'id': entity.id })}}">
+                        {% if entity.files|length > 0  %}
+                            <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="img-responsive center-block vertical-center" />
+                        {% endif %}
+                    </a>
+
+                    <div class="blockList">
+
+                        <div class="blockInfoList">
+
+                            <div class="listeDate">
+
+                                {% if entity.dateStart %}
+                                    {{ entity.dateStart|date('Y') }}
+                                {% endif %}
+                                    à
+                                {% if entity.dateEnd %}
+                                    {{ entity.dateEnd|date('Y') }}
+                                {% else %}
+                                    aujourd'hui
+                                {% endif %}
+
+                            </div>
+
+                            <div class="listeTitre">
+
+                                {{ entity.name }}
+
+                            </div>
+
+                            <div class="listeFunction">
+
+                                {{ entity.functionFr }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="encadreJobsMissionProjet">
+
+                        {#
+                            cas particulier
+                            id 6 -> Open
+                            id 1 -> auto entreprise
+                            #}
+
+                        {% if entity.id == 6 or entity.id == 1 %}
+
+                            {% if entity.jobs|length > 0 %}
+
+                                {% if entity.id == 6 %}
+                                    <div class="introductionMissionProjet">Mes missions :</div>
+                                {% else %}
+                                    <div class="introductionMissionProjet">Mes projets :</div>
+                                {% endif %}
+
+
+                                {% for entity in entity.jobs %}
+                                    <a href="{{ path('job_show', { 'id': entity.id }) }}">
+                                        <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="miniLogoEnLigne60" title="{{ entity.functionFr }}" />
+                                    </a>
+                                {% endfor %}
+
+                            {% endif %}
+
+                        {% else %}
+
+                            {% if entity.works|length > 0 %}
+
+                                <div class="introductionMissionProjet">Mes travaux :</div>
+
+                                {% set items = UtilsService.getItemsByIdsOrRandom(entity, 'Structure', 'Work') %}
+
+                                {% for entity in items %}
+                                    <a href="{{ path('work_show', { 'id': entity.id }) }}">
+                                        <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="miniLogoEnLigne60" title="{{ entity.nameFr }} ({{ entity.workType.nameFr }})" />
+                                    </a>
+                                {% endfor %}
+
+                            {% endif %}
+
+                        {% endif %}
+
+                        </div>
+
+                    </div>
+
+                  </div>
+
+              </div>
+
+          {% endfor %}
+
+      </div>
+
+    {% endif %}
+
+
+
+{% endblock %}

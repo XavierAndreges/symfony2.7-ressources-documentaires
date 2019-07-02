@@ -1,0 +1,249 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}New work{% endblock %}
+
+
+{% block body -%}
+
+    <h3>Création d'un work</h3>
+
+	<div class="well">
+
+	  	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+
+		    {{ form_errors(form) }}
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.nameFr, "nameFr", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.nameFr) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.nameFr, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+
+			<div class="form-group">
+
+		      {{ form_label(form.nameEn, "nameEn", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.nameEn) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.nameEn, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.dateStart, "dateStart", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.dateStart) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.dateStart, {'attr': {'class': 'form-control dateStart'}}) }}
+		      </div>
+
+		    </div>
+
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.dateEnd, "dateEnd", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.dateEnd) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.dateEnd, {'attr': {'class': 'form-control dateEnd'}}) }}
+		      </div>
+
+		    </div>
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.city, "Ville", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.city) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.geoloc, "Geolocalisation", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.geoloc) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.geoloc, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.workType, "workType", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.workType) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.workType, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+		   	<div class="form-group">
+
+		      {{ form_label(form.website, "Site web", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.website) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.website, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+		    <div class="form-group">
+
+		      {{ form_label(form.linkVideo1, "Lien video 1", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.linkVideo1) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.linkVideo1, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+		    <div class="form-group">
+
+		      {{ form_label(form.linkVideo2, "Lien video 2", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.linkVideo2) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.linkVideo2, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+		    <div class="form-group">
+
+		      {{ form_label(form.job, "job", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.job) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.job, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+		    <div class="form-group">
+
+		      {{ form_label(form.structure, "structure", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.structure) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.structure, {'attr': {'class': 'form-control'}}) }}
+		      </div>
+
+		    </div>
+
+		    <div class="form-group">
+
+		      {{ form_label(form.technos, "technos", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.technos) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.technos, {'attr': {'class': 'technos'}}) }}
+		      </div>
+
+		    </div>
+
+
+		    <div class="form-group">
+
+		      {{ form_label(form.tags, "tags", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      {{ form_errors(form.tags) }}
+
+		      <div class="col-sm-4">
+		        {{ form_widget(form.tags, {'attr': {'class': 'tags'}}) }}
+		      </div>
+
+		    </div>
+
+
+
+		    <div class="form-group">
+
+		      	{{ form_label(form.uploadedFiles, "uploadedFiles", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+
+		      	{{ form_errors(form.uploadedFiles) }}
+
+		      	<div id="block_image" class="col-sm-4">
+
+			      	{% for file in entity.files %}
+	                	<a class="delete_file" id="file_{{ file.id }}" href="javascript: file_delete({{ file.id }})" onclick="return confirm('are u sure?')">
+	                		<img src=" {{ asset('assets/close.png') }}" class="close_cross" />
+	                		<img src=" {{ asset('files/' ~ file.fileName ) }}" class="image absoluteIndex" />
+	                	</a>
+	            	{% endfor %}	
+
+	            	<div class="row">
+	            		<div class="col-sm-12">
+			            	<label class="myLabel">
+		    					<input type="file" id="docbundle_work_uploadedFiles" name="docbundle_work[uploadedFiles][]" multiple="multiple" class="form-control">
+		    					<span>Ajouter des fichiers</span>
+							</label>
+						</div>
+					</div>
+
+            	</div>
+
+            		
+
+		    </div>
+
+
+			<div class="row">
+
+				<div class="col-sm-3">
+					<a href="{{ path('work') }}">
+	        			Back to the list
+	    			</a>
+		    	</div>
+
+				<div class="col-sm-4">
+		    		{{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+		    	</div>
+
+		    </div>
+
+		{{ form_row(form._token) }}
+
+		{{ form_end(form, {'render_rest': false}) }}
+
+
+	</div>
+
+
+{% endblock %}

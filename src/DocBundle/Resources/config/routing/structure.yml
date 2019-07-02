@@ -1,0 +1,23 @@
+structure:
+    path:     /
+    defaults: { _controller: "DocBundle:Structure:index" }
+
+structure_show:
+    path:     /{id}/show
+    defaults: { _controller: "DocBundle:Structure:show" }
+
+structure_new:
+    path:     /new
+    defaults: { _controller: "DocBundle:Structure:new" }
+
+structure_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DocBundle:Structure:edit" }
+
+structure_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DocBundle:Structure:delete" }
+
+structure_admin:
+    path:     /admin
+    defaults: { _controller: "DocBundle:Structure:index" }

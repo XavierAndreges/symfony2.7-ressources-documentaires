@@ -1,0 +1,110 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Structure{% endblock %}
+
+{% block body -%}
+
+    <h1>{{ entity.name }}</h1>
+
+    <div class="row">
+
+        <div class="col-sm-6">
+
+            {{ include("DocBundle:Common:caroussel.html.twig") }}
+
+        </div>
+
+
+        <div class="col-sm-6 blockItemDetail">
+
+            <div>Fonction : <strong>{{ entity.functionFr }}</strong></div>
+
+            <div>Date : <strong>
+                {% if entity.dateStart ==  entity.dateEnd %}
+                    {{ entity.dateStart|date('F Y') }}
+                {% else %}
+                    De {{ entity.dateStart|date('F Y') }} à {{ entity.dateEnd|date('F Y') }}
+                {% endif %}
+            </strong></div>
+
+            <div>Localisation : <strong>{{ entity.city }}</strong></div>
+
+            {% if entity.website %}
+                <div>Site web : <strong><a href="{{ entity.website }}" target="_blank">{{ entity.website }}</a></strong></div>
+            {% endif %}
+
+            {% if entity.tags|length > 0 %}
+
+                <div>Tags :<strong> {{ UtilsService.getConcatenateTagsInLine(entity.tags, ", ") }}</strong></div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <div class="adminDetail">
+      <ul class="record_actions">
+        <li>
+            <a href="{{ path('structure') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('structure_edit', { 'id': entity.id }) }}">
+                Edit
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('structure_delete', { 'id': entity.id }) }}" onclick="return confirm('are u sure?')">Supprimer</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="row">
+
+        {% if entity.works|length > 0 %}
+            <div class="titleAssociatedWorks">Travaux associés</div>
+        {% endif %}
+
+        {% for entity in entity.works %}
+
+            <div class="col-xs-3 col-sm-3 col-md-3" style="height:300px;">
+
+                {% if entity.files|length > 0 %}
+                    <a class="mainLinkRowList" href="{{ path('work_show', { 'id': entity.id })}}">
+                        <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="img-responsive center-block vertical-center" />
+                    </a>
+                {% endif %}
+
+                <div class="blockDetailList">
+
+                    <div class="listeDate">
+
+                        <span style="text-decoration:underline">
+                            <a href="{{ path('work', { 'workType': entity.workType.idName })}}">{{ entity.workType.nameFr }}</a>
+                        </span>
+                        (
+                        {% if entity.dateStart %}
+                            {{ entity.dateStart|date('d/m/Y') }}
+                        {% endif %}
+                        )
+
+                    </div>
+
+                    <div class="listeTitre">
+
+                        {{ entity.nameFr }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+{% endblock %}

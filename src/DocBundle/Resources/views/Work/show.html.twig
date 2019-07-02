@@ -1,0 +1,110 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+
+    <style>
+
+      </style>
+
+{% endblock %}
+
+{% block title %}Work{% endblock %}
+
+
+{% block body -%}
+
+    <h1>{{ entity.nameFr }}</h1>
+
+    <div class="row">
+
+        <div class="col-sm-6">
+
+            {{ include("DocBundle:Common:caroussel.html.twig") }}
+
+        </div>
+
+        <div class="col-sm-6 blockItemDetail">
+
+            <div>Type : <strong>{{ entity.workType.nameFr }}</strong></div>
+
+            <div>Date : <strong>
+                {% if entity.dateStart ==  entity.dateEnd %}
+                    {{ entity.dateStart|date('F Y') }}
+                {% else %}
+                    De {{ entity.dateStart|date('F Y') }} à {{ entity.dateEnd|date('F Y') }}
+                {% endif %}
+            </strong></div>
+
+            <div>Localisation : <strong>
+              {% if entity.city %}{{ entity.city }}{% elseif entity.structure %}{{ entity.structure.city }}{% endif %}
+            </strong></div>
+
+            {% if entity.website %}
+                <div>Site web : <strong><a href="{{ entity.website }}" target="_blank">{{ entity.website }}</a></strong></div>
+            {% endif %}
+
+            {% if entity.linkVideo1 %}
+                <div>Vidéo 1 : <strong>{{ entity.linkVideo1 }}</strong></div>
+            {% endif %}
+
+            {% if entity.linkVideo2 %}
+                <div>Vidéo 2 : <strong>{{ entity.linkVideo2 }}</strong></div>
+            {% endif %}
+
+            {% if entity.structure %}
+                <div>Structure : <strong>{{ entity.structure.name }}</strong></div>
+            {% endif %}
+
+            {% if entity.job %}
+                <div>Fonction : <strong>{{ entity.job.name }}</strong></div>
+            {% endif %}
+
+            {% if entity.tags|length > 0 %}
+
+                <div>Tags :<strong> {{ UtilsService.getConcatenateTagsInLine(entity.tags, ", ") }}</strong></div>
+
+            {% endif %}
+
+            {% if entity.technos|length > 0 %}
+
+                <div>Technologies mises en oeuvre :</div>
+
+                <div class="technosListeItemDetail">
+
+                    {% for entity in entity.technos|sortByField("startedYear") %}
+                        <a href="{{ path('techno_show', { 'id': entity.id }) }}">
+                            <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="miniLogoEnLigne50" title="{{ entity.name }} ({{ entity.technoCategory.nameFr }})" />
+                        </a>
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+
+    <ul class="record_actions">
+
+        <li>
+            <a href="{{ path('work') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('work_edit', { 'id': entity.id }) }}">
+                Edit
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('work_delete', { 'id': entity.id }) }}" onclick="return confirm('are u sure?')">
+                Supprimer
+            </a>
+        </li>
+
+    </ul>
+
+{% endblock %}

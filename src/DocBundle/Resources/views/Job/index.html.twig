@@ -1,0 +1,230 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Job{% endblock %}
+
+{% block body -%}
+
+    <h1>Job list</h1>
+
+    {% if isAdmin %}
+
+            <a href="{{ path('job') }}" class="btn btn-default">Mode public</a>
+
+            <a href="{{ path('job_new') }}" class="btn btn-default">Créer un nouvel élément</a>
+
+            <br><br>
+
+            <div class="row firstLineTable">
+
+                <strong>
+
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-2">
+                                id
+                            </div>
+                            <div class="col-md-10">
+                                <strong>Fonction</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        Texte
+                    </div>
+
+                    <div class="col-md-1">
+                        Date début / fin
+                    </div>
+
+                    <div class="col-md-1">
+                        structure
+                    </div>
+
+                    <div class="col-md-1">
+                        Techno
+                    </div>
+
+                    <div class="col-md-1">
+                        Tags
+                    </div>
+
+                    <div class="col-md-1">
+                        Images
+                    </div>
+
+                    <div class="col-md-1">
+                        Actions
+                    </div>
+
+                </strong>
+
+            </div>
+
+            <br>
+
+            {% for entity in entities %}
+
+                <div class="row {% if loop.index is even %}rowBgEven{% else %}rowBgOdd{% endif %}">
+
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-2">
+                                {{ entity.id }}
+                            </div>
+                            <div class="col-md-10">
+                                <strong>{{ entity.functionFr }}</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2" title="{{ entity.textFr }}">
+                        {{ entity.textFr|truncate(50) }}
+                    </div>
+
+                    <div class="col-md-1">
+                        {% if entity.dateStart %}{{ entity.dateStart|date('Y') }}{% endif %}
+                        {% if entity.dateEnd %} à {{ entity.dateEnd|date('Y') }}{% endif %}
+                    </div>
+
+                    <div class="col-md-1">
+                        {% if entity.structure %}
+                            {{ entity.structure.name }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-1">
+                        {% if entity.technos|length > 0 %}
+                            <a title="{{ UtilsService.getConcatenateTechnos(entity.technos) }}">{{ entity.technos|length }} items</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-1">
+                        {% if entity.tags|length > 0 %}
+                            <a title="{{ UtilsService.getConcatenateTags(entity.tags) }}">{{ entity.tags|length }} items</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-1">
+                        {% set nbFiles = entity.files|length %}
+                        {% if nbFiles > 0 %}
+                            <div class="vignetteListe" style="background-image:url({{ asset('files/' ~ entity.files[0].fileName ) }})">
+                                <div class="pastilleVignette">
+                                    {{ nbFiles }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-1">
+                        <div class="row">
+                            <a class="col-md-12" href="{{ path('job_show', { 'id': entity.id }) }}">Consulter</a>
+                            <a class="col-md-12" href="{{ path('job_edit', { 'id': entity.id }) }}">Modifier</a>
+                            <a class="col-md-12" href="{{ path('job_delete', { 'id': entity.id }) }}" onclick="return confirm('are u sure?')">Supprimer</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+
+
+
+
+
+
+
+
+
+            <a href="{{ path('job_admin') }}" class="btn btn-default">Mode admin</a>
+
+            <br><br>
+
+            <div class="row jobRowList">
+
+                {% for entity in entities %}
+
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 sizeRowList">
+
+                        <div class="borderRowList">
+
+                            <a class="mainLinkRowList" href="{{ path('job_show', { 'id': entity.id })}}">
+                                <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="img-responsive center-block vertical-center" />
+                            </a>
+
+                            <div class="blockList">
+
+                                <div class="blockInfoList jobList">
+
+                                      <div class="listeDate">
+
+                                          {% if entity.dateStart %}
+                                              {{ entity.dateStart|date('Y') }}
+                                          {% endif %}
+                                              à
+                                          {% if entity.dateEnd %}
+                                              {{ entity.dateEnd|date('Y') }}
+                                          {% else %}
+                                              aujourd'hui
+                                          {% endif %}
+
+                                      </div>
+
+                                      <div class="listeTitre">
+
+                                          {{ entity.name }}
+
+                                          {#
+                                              cas particulier
+                                              id 6 -> Open
+                                              id 1 -> auto entreprise
+                                              #}
+
+                                          {% if entity.structure.id == 6 or entity.structure.id == 1 %}
+
+                                           @ {{ entity.nameProject|upper }}
+
+                                          {% endif %}
+
+                                      </div>
+
+                                      <div class="listeJobStructure blue">
+
+                                           <a href="{{ path('structure_show', { 'id': entity.structure.id }) }}">{{ entity.structure.name|upper }}</a> ({{ entity.structure.city }})
+
+                                      </div>
+
+
+                                </div>
+
+                                {% if entity.technos|length > 0 %}
+
+                                <div class="encadreJobsMissionProjet">
+
+                                    {% for entity in entity.technos|sortByField("startedYear") %}
+                                        <a href="{{ path('techno_show', { 'id': entity.id }) }}" style="text-decoration:none;">
+                                            <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="miniLogoEnLigne50" title="{{ entity.name }} ({{ entity.technoCategory.nameFr }})" />
+                                        </a>
+                                    {% endfor %}
+
+                                </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+{% endblock %}
