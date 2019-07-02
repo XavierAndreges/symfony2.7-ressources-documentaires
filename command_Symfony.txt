@@ -1,0 +1,248 @@
+﻿
+
+cd C:\wamp64\www\Virement
+http://localhost:8080/Virement/web/app_dev.php/job
+
+cd /Applications/MAMP/htdocs/vagoDev
+git checkout feature-xavier
+git pull origin dev-Matthieu
+git pull origin feature-xavier
+git push origin feature-xavier
+git merge origin/dev
+git merge origin/dev-Matthieu
+
+rvm use ruby-2.2.0
+cap deploy
+$PORT2016!mmo
+
+ssh vago@149.202.163.160
+$PORT2016!mmo
+cd xavier.vagodev.decanet.fr/httpdocs/current
+
+git checkout -b feature-xavier-local
+git push origin feature-xavier-local
+
+git commit -a -m "set xav@dd.com as default username"
+
+php app/console doctrine:schema:update --dump-sql
+php app/console doctrine:schema:update --force
+
+php app/console doctrine:schema:create
+php app/console doctrine:schema:drop --force
+
+php app/console doctrine:generate:entity
+DocBundle:fuck
+
+php app/console doctrine:generate:entities DocBundle
+
+php app/console doctrine:fixture:load
+cd src/Vago/CoreBundle/DataFixtures
+
+php app/console cache:clear
+php app/console cache:clear --env=prod
+
+php app/console doctrine:cache:clear-metadata
+php app/console doctrine:cache:clear-query
+php app/console doctrine:cache:clear-result
+
+php composer.phar install
+
+
+php app/console generate:doctrine:form DocBundle:Client
+
+php app/console generate:doctrine:crud --entity=DocBundle:Client
+
+
+            ->add('nameFr',         'text')
+            ->add('nameEn',         'text')
+            ->add('dateStart',      'date')
+            ->add('dateEnd',        'date')
+            ->add('workType',       'entity', array(
+                                    'class' => 'DocBundle:WorkType',
+                                    'choice_label' => 'nameFr'))
+            ->add('executionType',  'entity', array(
+                                    'class' => 'DocBundle:ExecutionType',
+                                    'choice_label' => 'nameFr'))
+            ->add('save',           'submit')
+
+
+
+ESC :X enter
+
+* @ORM\JoinTable(name="users_allow_to_chat")
+
+
+php bin/console doctrine:schema:update --dump-sql
+
+
+http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html
+php app/console doctrine:migrations:diff
+php app/console doctrine:migrations:migrate
+     * @ORM\JoinTable(name="users_allow_to_chat")
+
+php app/console doctrine:mapping:import --force mpCoreBundle xml --filter="Petanque"
+php app/console doctrine:mapping:convert annotation ./src
+php app/console doctrine:generate:entities mpCoreBundle:Petanque --no-backup
+
+
+php app/console doctrine:generate:fixture --entity=DocBundle:WorkType --name="WorkType" --order="0" --no-interaction --ids=0-3000
+
+php app/console doctrine:generate:fixture --entity=VagoCoreBundle:Route --name="RouteXavier" --order="0" --no-interaction --ids=0-3000
+
+php app/console doctrine:generate:fixture --entity=VagoCoreBundle:User --name="UserXavier" --order="0" --no-interaction --ids=0-3000
+
+php app/console doctrine:generate:fixture --entity=VagoCoreBundle:RadioStation --name="RadioStation" --order="0" --no-interaction --ids=0-3000
+
+php app/console doctrine:generate:fixture --entity=VagoCoreBundle:MusicStyle --name="MusicStyle" --order="0" --no-interaction --ids=0-3000
+
+php app/console doctrine:generate:fixture --entity=VagoCoreBundle:Hobbit --name="Hobbit" --order="0" --no-interaction --ids=0-3000
+
+php app/console doctrine:generate:fixture --entity=VagoCoreBundle:Car --name="Car" --order="0" --no-interaction --ids=0-3000
+
+php app/console doctrine:generate:fixture --entity=VagoCoreBundle:File --name="FileTest" --order="0" --no-interaction --ids=0-3000
+
+# install gem
+sudo apt-get install rubygems build-essential
+# si besoin mettre à jour ruby
+sudo apt-get install ruby-full
+#install capistrano v 2.15.5
+sudo gem install --version 2.15.5 capistrano
+# install capifony version 2.8.6
+sudo gem install --version 2.8.6 capifony
+
+https://shellzero.wordpress.com/tag/how-to-update-ruby-2-0-to-the-latest-version-on-mac-os-x-yosemite/
+rvm use ruby-2.2.0
+
+
+--entity correspond à l'entité que vous souhaitez transformer en fixture (ici Route)
+--name correspond au nom du fichier
+--order correspond à l'ordre d'exécution du fichier
+--ids correspond à la plage d'id que vous voulez trnsformer (ici de 1180 à 1266)
+--no-interaction vous évite de re-remplir les champs
+
+
+php ./vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/bin/build_bootstrap.php
+
+in app/AppKernel.php :
+public function __construct($environment, $debug)
+    {
+        date_default_timezone_set( 'Europe/Paris' );
+        ini_set('memory_limit', '256M');
+        parent::__construct($environment, $debug);
+    }
+
+
+
+
+sudo /Applications/TextEdit.app/Contents/MacOS/TextEdit /etc/hosts
+
+<VirtualHost *:80>
+        DocumentRoot "/home/dev/www/vago/web"
+        ServerName vago.local
+
+        <Directory /home/dev/www/vago/web>
+                Options Indexes FollowSymLinks MultiViews
+                Order allow,deny
+                Allow from all
+                Require all granted
+                AllowOverride All
+        </Directory>
+</VirtualHost>
+
+
+********************** USEFULL CODE *************************
+
+—— UserService.php ————
+
+foreach (json_decode($request->getContent(), true) as $key => $attribute) {
+            if (in_array($key, $attributesNeedingMail)) {
+                return true;
+            }
+        }
+
+
+********************** PROBLEMES *************************
+
+* @ORM\JoinTable(name="users_allow_to_chat")
+
+class VagoOperationFactory extends OperationFactory
+
+LoclizedString :: foreach constant
+
+
+    firewalls:
+        testLogin:
+            pattern:        ^/moderator-delete-opinion
+            anonymous:      true
+            provider:       test
+            form_login:
+                login_path:   fos_user_security_login
+                check_path:   fos_user_security_check
+                always_use_default_target_path : true
+                default_target_path: /server-time
+                use_referer:  true
+            logout:
+                path:         fos_user_security_logout
+                target:       /platform
+            remember_me:
+                key:          %secret%
+
+
+     * {@inheritdoc}
+     *
+     * @SatisfiesParentSecurityPolicy
+     * @PreAuthorize("isFullyAuthenticated()")
+
+
+testLogin:
+    pattern:   /testLogin
+    defaults:  { _controller: VagoCoreBundle:Moderator:getConnexion }
+
+
+
+(moderator-delete-opinion|moderator-user-picture)
+
+
+
+@ORM\ManyToMany(targetEntity="User")
+->
+$usersToChat -> @ORM\ManyToOne(targetEntity="User")
+
+https://openclassrooms.com/courses/developpez-votre-site-web-avec-le-framework-symfony2/les-relations-entre-entites-avec-doctrine2
+
+Relation Many-To-Many avec attributs
+
+
+Composant Translator :
+http://symfony.com/doc/current/book/translation.html
+
+
+$qb = $this->createQueryBuilder('p')
+	     -> ****** select count *******
+            ->orderBy('p.id', 'DESC')
+            ->andWhere('p.createdAt > :date_start')
+            ->andWhere('p.createdAt < :date_end')
+            ->setParameter('date_start', $date->format('Y-m-d 00:00:00'))
+            ->setParameter('date_end',   $date->format('Y-m-d 23:59:59'))
+            ->setMaxResults(1);
+
+$em -> remove($object)
+
+ ********* to remove after test : driver will nerver arrive here :
+        if ($currentRoute->getTransportMode() == Route::MOD_DRIVER) {
+            $currentRoute->getPassengers()->first()->setCurrentRoute(null);
+        }
+
+
+
+                    <img src=" {{ asset('files/' ~ entity.files[0].fileName ) }}" class="img-responsive center-block vertical-center" style="max-height:200px;" />
+
+
+
+                    <div class="listeTags">
+
+                        {% for tag in entity.tags %}
+                            {{ tag.nameFr }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+
+                    </div>
